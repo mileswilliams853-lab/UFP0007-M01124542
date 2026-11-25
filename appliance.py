@@ -60,3 +60,12 @@ class Appliance:
     # Electricity cost calculation
     def calculate_cost(self):
         return self.calculate_energy_kwh() * self.__cost_per_kwh
+    # Convert appliance information into a row for saving information
+    def to_row(self):
+        return [
+            "Appliance",
+            self.__name,
+            self.__power_watts,
+            self.__hours_used,
+            self.__cost_per_kwh
+        ]
