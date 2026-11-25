@@ -13,3 +13,13 @@ class AirConditioner(Appliance):
         energy = (self.get_power_watts() * self.get_hours_used()) / 1000
 
         return energy
+
+     # Convert air conditioner information into a row for saving
+    def to_row(self):
+        return [
+            "AirConditioner",
+            self.get_name(),
+            self.get_power_watts(),
+            self.get_hours_used(),
+            self.get_cost_per_kwh()
+        ]
