@@ -1,55 +1,49 @@
-# Import our child classes
 from fridge import Fridge
 from air_conditioner import AirConditioner
+from storage import save_appliances, load_appliances
 
-# Create a fridge object
-my_fridge = Fridge(
-    "Samsung Fridge",
-    150,
-    24,
-    10,
-    0.4
-)
 
-# Create an air conditioner object
-my_air_conditioner = AirConditioner(
-    "LG Air Conditioner",
-    1500,
-    5,
-    10
-)
+# Load previously saved appliances
+appliances = load_appliances()
+
+# Create default appliances if no saved data exists
+if not appliances:
+    appliances = [
+        Fridge("Samsung Fridge", 150, 24, 10, 0.4),
+        AirConditioner("LG Air Conditioner", 1500, 5, 10)
+    ]
+
 
 # Display Home Energy Monitor
 print("=" * 40)
 print("        HOME ENERGY MONITOR")
 print("=" * 40)
 
-# Display fridge information
-print("\n--- FRIDGE ---")
-print("Appliance: Samsung Fridge")
-print(f"Energy Consumption: {my_fridge.calculate_energy_kwh():.2f} kWh")
-print(f"Electricity Cost: Rs {my_fridge.calculate_cost():.2f}")
+total_energy = 0
+total_cost = 0
 
-# Display air conditioner information
-print("\n--- AIR CONDITIONER ---")
-print("Appliance: LG Air Conditioner")
-print(f"Energy Consumption: {my_air_conditioner.calculate_energy_kwh():.2f} kWh")
-print(f"Electricity Cost: Rs {my_air_conditioner.calculate_cost():.2f}")
+for appliance in appliances:
+    energy = appliance.calculate_energy_kwh()
+    cost = appliance.calculate_cost()
 
-# Display total energy consumption and cost
-total_energy = (
-    my_fridge.calculate_energy_kwh()
-    + my_air_conditioner.calculate_energy_kwh()
-)
+    print(f"\n--- {appliance.get_name()} ---")
+    print(f"Energy Consumption: {energy:.2f} kWh")
+    print(f"Electricity Cost: Rs {cost:.2f}")
 
-total_cost = (
-    my_fridge.calculate_cost()
-    + my_air_conditioner.calculate_cost()
-)
+    total_energy += energy
+    total_cost += cost
 
+
+# Display total summary
 print("\n" + "=" * 40)
 print("          TOTAL SUMMARY")
 print("=" * 40)
 print(f"Total Energy Consumption: {total_energy:.2f} kWh")
 print(f"Total Electricity Cost: Rs {total_cost:.2f}")
 print("=" * 40)
+
+
+# Save appliance information
+save_appliances(appliances)
+
+print("\nAppliance information saved successfully!")
