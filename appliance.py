@@ -70,3 +70,13 @@ class Appliance:
             self.__hours_used,
             self.__cost_per_kwh
         ]
+    
+    # Display appliance information
+    def __str__(self):
+        return (
+            f"Appliance: {self.__name}\n"
+            f"Power: {self.__power_watts} W\n"
+            f"Hours Used: {self.__hours_used}\n"
+            f"Energy Consumption: {self.calculate_energy_kwh():.2f} kWh\n"
+            f"Electricity Cost: Rs {self.calculate_cost():.2f}"
+        )
