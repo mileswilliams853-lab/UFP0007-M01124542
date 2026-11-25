@@ -1,6 +1,20 @@
+import csv
+
 # Import our child classes
 from fridge import Fridge
 from air_conditioner import AirConditioner
+
+# Save appliances to a CSV file
+def save_appliances(appliances):
+
+    with open("energy_data.csv", "w", newline="") as file:
+
+        writer = csv.writer(file)
+
+        for appliance in appliances:
+            writer.writerow(appliance.to_row())
+
+    print("Appliances saved successfully!")
 
 # Create one fridge object
 my_fridge = Fridge(
@@ -36,4 +50,7 @@ for appliance in appliances:
 
     print("Electricity cost: Rs", round(appliance.calculate_cost(), 2))
 
-print("----------------------------")
+    print("----------------------------")
+
+# Save all appliances
+save_appliances(appliances)
