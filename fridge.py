@@ -36,3 +36,14 @@ class Fridge(Appliance):
         # A fridge compressor does not run continuously
         return normal_energy * self.__compressor_factor
 
+    # Convert fridge information into a row for saving
+    def to_row(self):
+        return [
+            "Fridge",
+            self.get_name(),
+            self.get_power_watts(),
+            self.get_hours_used(),
+            self.get_cost_per_kwh(),
+            self.__compressor_factor
+        ]
+
