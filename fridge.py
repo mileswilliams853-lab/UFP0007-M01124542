@@ -1,6 +1,5 @@
 from appliance import Appliance
 
-
 class Fridge(Appliance):
     # Child class for refrigerators
 
