@@ -21,7 +21,12 @@ saving and loading of the Home Energy Monitor.
 
 ## Test Results
 
-Tests are executed using Python unittest.
+All 10 automated unit tests passed successfully.
 
-Actual results will be recorded after running
-the tests.
+The tests verified:
+- Appliance creation
+- Energy consumption calculations
+- Electricity cost calculations
+- Input validation
+- Fridge compressor validation
+- Air conditioner functionality
