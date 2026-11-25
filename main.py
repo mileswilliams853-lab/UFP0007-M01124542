@@ -1,22 +1,8 @@
-import csv
-
 # Import our child classes
 from fridge import Fridge
 from air_conditioner import AirConditioner
 
-# Save appliances to a CSV file
-def save_appliances(appliances):
-
-    with open("energy_data.csv", "w", newline="") as file:
-
-        writer = csv.writer(file)
-
-        for appliance in appliances:
-            writer.writerow(appliance.to_row())
-
-    print("Appliances saved successfully!")
-
-# Create one fridge object
+# Create a fridge object
 my_fridge = Fridge(
     "Samsung Fridge",
     150,
@@ -25,7 +11,7 @@ my_fridge = Fridge(
     0.4
 )
 
-# Create one air conditioner object
+# Create an air conditioner object
 my_air_conditioner = AirConditioner(
     "LG Air Conditioner",
     1500,
@@ -33,24 +19,37 @@ my_air_conditioner = AirConditioner(
     10
 )
 
-# Create a list containing both objects
-appliances = [my_fridge, my_air_conditioner]
+# Display Home Energy Monitor
+print("=" * 40)
+print("        HOME ENERGY MONITOR")
+print("=" * 40)
 
-# Loop through the appliances
-for appliance in appliances:
+# Display fridge information
+print("\n--- FRIDGE ---")
+print("Appliance: Samsung Fridge")
+print(f"Energy Consumption: {my_fridge.calculate_energy_kwh():.2f} kWh")
+print(f"Electricity Cost: Rs {my_fridge.calculate_cost():.2f}")
 
-    print("----------------------------")
-    print("Appliance:", appliance.get_name())
+# Display air conditioner information
+print("\n--- AIR CONDITIONER ---")
+print("Appliance: LG Air Conditioner")
+print(f"Energy Consumption: {my_air_conditioner.calculate_energy_kwh():.2f} kWh")
+print(f"Electricity Cost: Rs {my_air_conditioner.calculate_cost():.2f}")
 
-    print("Power:", appliance.get_power_watts(), "Watts")
+# Display total energy consumption and cost
+total_energy = (
+    my_fridge.calculate_energy_kwh()
+    + my_air_conditioner.calculate_energy_kwh()
+)
 
-    print("Hours used:", appliance.get_hours_used())
+total_cost = (
+    my_fridge.calculate_cost()
+    + my_air_conditioner.calculate_cost()
+)
 
-    print("Energy used:", round(appliance.calculate_energy_kwh(), 2), "kWh")
-
-    print("Electricity cost: Rs", round(appliance.calculate_cost(), 2))
-
-    print("----------------------------")
-
-# Save all appliances
-save_appliances(appliances)
+print("\n" + "=" * 40)
+print("          TOTAL SUMMARY")
+print("=" * 40)
+print(f"Total Energy Consumption: {total_energy:.2f} kWh")
+print(f"Total Electricity Cost: Rs {total_cost:.2f}")
+print("=" * 40)
