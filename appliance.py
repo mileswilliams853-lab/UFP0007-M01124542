@@ -1,82 +1,58 @@
 class Appliance:
- # Parent class for all household appliances
+    """Parent class for all household appliances."""
+
     def __init__(self, name, power_watts, hours_used, cost_per_kwh):
-
-        # Private attributes
-        self.__name = ""
-        self.__power_watts = 0
-        self.__hours_used = 0
-        self.__cost_per_kwh = 0
-
-        # Set values using validation methods
         self.set_name(name)
         self.set_power_watts(power_watts)
         self.set_hours_used(hours_used)
         self.set_cost_per_kwh(cost_per_kwh)
 
-    # Get methods
+    # Getters and setters for appliance information
+
     def get_name(self):
         return self.__name
+
+    def set_name(self, name):
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("Appliance name cannot be empty.")
+        self.__name = name.strip()
 
     def get_power_watts(self):
         return self.__power_watts
 
+    def set_power_watts(self, power):
+        if isinstance(power, bool) or not isinstance(power, (int, float)):
+            raise ValueError("Power must be a number.")
+        if power <= 0:
+            raise ValueError("Power must be greater than zero.")
+        self.__power_watts = float(power)
+
     def get_hours_used(self):
         return self.__hours_used
+
+    def set_hours_used(self, hours):
+        if isinstance(hours, bool) or not isinstance(hours, (int, float)):
+            raise ValueError("Hours must be a number.")
+        if hours < 0 or hours > 24:
+            raise ValueError("Hours must be between 0 and 24.")
+        self.__hours_used = float(hours)
 
     def get_cost_per_kwh(self):
         return self.__cost_per_kwh
 
-    #Set methods with validation
-    def set_name(self,name):
-        if isinstance(name, str) and name.strip() != "":
-            self.__name = name
-            return True
-        return False
-
-    def set_power_watts(self, power):
-        if isinstance(power, (int, float)) and not isinstance(power, bool) and power > 0:
-            self.__power_watts = power
-            return True
-        return False
-
-    def set_hours_used(self, hours):
-        if isinstance(hours, (int, float)) and not isinstance(hours, bool) and 0 <= hours <= 24:
-            self.__hours_used = hours
-            return True
-        return False
-
     def set_cost_per_kwh(self, cost):
-        if isinstance(cost, (int, float)) and not isinstance(cost, bool) and cost >= 0:
-            self.__cost_per_kwh = cost
-            return True
-        return False
+        if isinstance(cost, bool) or not isinstance(cost, (int, float)):
+            raise ValueError("Electricity cost must be a number.")
+        if cost < 0:
+            raise ValueError("Electricity cost cannot be negative.")
+        self.__cost_per_kwh = float(cost)
 
-    #  Electricity consumption calculation
+    # Calculate daily energy consumption
+
     def calculate_energy_kwh(self):
-        energy = (self.__power_watts * self.__hours_used) / 1000
-        return energy
+        return (self.__power_watts * self.__hours_used) / 1000
 
-    # Electricity cost calculation
+    # Calculate electricity cost
+
     def calculate_cost(self):
         return self.calculate_energy_kwh() * self.__cost_per_kwh
-    
-    # Convert appliance information into a row for saving information
-    def to_row(self):
-        return [
-            "Appliance",
-            self.__name,
-            self.__power_watts,
-            self.__hours_used,
-            self.__cost_per_kwh
-        ]
-    
-    # Display appliance information
-    def __str__(self):
-        return (
-            f"Appliance: {self.__name}\n"
-            f"Power: {self.__power_watts} W\n"
-            f"Hours Used: {self.__hours_used}\n"
-            f"Energy Consumption: {self.calculate_energy_kwh():.2f} kWh\n"
-            f"Electricity Cost: Rs {self.calculate_cost():.2f}"
-        )
